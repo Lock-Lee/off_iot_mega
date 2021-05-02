@@ -558,8 +558,8 @@ void loop() {
 
 
 
-    if (!received.indexOf("temp=")) {    ///ph
-      String str = received.substring(5);
+    if (!received.indexOf("ph=")) {    ///ph
+      String str = received.substring(3);
 
       Serial.println(received);
 

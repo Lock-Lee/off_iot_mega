@@ -45,7 +45,7 @@ void onMsghandler(char *topic, uint8_t* msg, unsigned int msglen) {
 
   if (top == "/NUTTACIT/ionic/ph") {
     phRead =  message;
-    mySerial.println((String)"temp=" + phRead);
+    mySerial.println((String)"ph=" + phRead);
 
 
   } else if (top == "/NUTTACIT/ionic/humi") {
