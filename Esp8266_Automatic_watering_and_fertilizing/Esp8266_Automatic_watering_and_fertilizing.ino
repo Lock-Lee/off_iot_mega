@@ -43,18 +43,23 @@ void onMsghandler(char *topic, uint8_t* msg, unsigned int msglen) {
   Serial.print(" --> ");
   Serial.println(message);
 
-  if (top == "/NUTTACIT/ionic/ph") {
+  if (top == "/NUTTACIT/ionic/phstart") {
     phRead =  message;
-    mySerial.println((String)"ph=" + phRead);
+    mySerial.println((String)"phstart=" + phRead);
 
 
-  } else if (top == "/NUTTACIT/ionic/humi") {
+  }else  if (top == "/NUTTACIT/ionic/phend") {
+    phRead =  message;
+    mySerial.println((String)"phend=" + phRead);
+
+
+  }else if (top == "/NUTTACIT/ionic/humi") {
     humiRead  = message;
     mySerial.println((String)"humi=" + humiRead);
 
   } else if (top == "/NUTTACIT/ionic/compost1") {
-    
-    timephstart1  = part03.toInt();
+
+    timephstart1  = message;
     mySerial.println((String)"timephstart1=" + timephstart1);
   }
   else if (top == "/NUTTACIT/ionic/compost2") {
@@ -81,7 +86,7 @@ void onMsghandler(char *topic, uint8_t* msg, unsigned int msglen) {
   else if (top == "/NUTTACIT/ionic/water1") {
     timestart1  = message;
     mySerial.println((String)"timestart1=" + timestart1);
-    
+
   }
   else if (top == "/NUTTACIT/ionic/water2") {
     timeEnd1  = message;

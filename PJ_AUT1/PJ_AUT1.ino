@@ -33,7 +33,8 @@ char key;
 
 
 bool stateph  = false;
-int starttimeph ;
+int starttimeph_m ;
+int starttimeph_h;
 
 
 int Moisture;
@@ -558,15 +559,37 @@ void loop() {
 
 
 
-    if (!received.indexOf("ph=")) {    ///ph
-      String str = received.substring(3);
-
+    if (!received.indexOf("phstart=")) {    ///ph
+      String str = received.substring(8);
+      String part1 = splitOfstrng(received, '.', 0);
+      String part2 = splitOfstrng(received, '.', 1);
       Serial.println(received);
+
+      PHStartInt =part1;
+      PHStartfloat = part2;
+      
+
+    }
+    else if (!received.indexOf("phend=")) {    ///ph
+     Serial.println(received);
+      String str = received.substring(6);
+      String part1 = splitOfstrng(received, '.', 0);
+      String part2 = splitOfstrng(received, '.', 1);
+     
+
+     
+      PHEndInt  = part1;
+      PHEndfloat =part2;
 
     }
     else if (!received.indexOf("humi=")) {
-
-      Serial.println(received);
+       Serial.println(received);
+     
+       received = received.substring(5);
+      String part1 = splitOfstrng(received, ':', 0);
+      String part2 = splitOfstrng(received, ':', 1);
+      SoilENDINT =  part1.toInt();
+      SoilStartINT =  part2.toInt();
     }
     else if (!received.indexOf("timephstart1=")) {
 
@@ -1088,15 +1111,24 @@ void Set_PH() {
   }
 
 
-  if (realTime.sec > 58) {
-    starttimeph++;
+  if (realTime.min > 58) {
+    starttimeph_h++;
 
   }
-  if (starttimeph >= 2) {
+  if (starttimeph_h >= 6) {
+  
     stateph = 1;
-  } else if (starttimeph >= 3) {
+
+  } 
+  if(realTime.sec> 58  && starttimeph_h >= 6){
+    starttimeph_m++;
+  }
+  
+   if (starttimeph_m > 1) {
+
     stateph = 0;
     starttimeph = 0;
+    starttimeph_m = 0;
   }
 
 
